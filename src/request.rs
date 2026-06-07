@@ -619,3 +619,22 @@ impl KeepIommuRequest {
         unsafe { Self::new_raw([0x8ebaabe51f490179, 0x2aa86a59ffb4ab0f], 0, ()) }
     }
 }
+
+#[repr(C)]
+pub struct TscFrequencyRespData {
+    /// Frequency in Hz of the main timestamp counter.
+    /// On x86, this means the TSC, for RISC-V, rdtime, and for ARM, CNTPCT_EL0.
+    pub frequency: u64,
+}
+
+/// Get timestamp counter frequency request.
+pub type TscFrequencyRequest = Request<TscFrequencyRespData>;
+
+/// Get timestamp counter frequency response.
+pub type TscFrequencyResponse = Response<TscFrequencyRespData>;
+
+impl TscFrequencyRequest {
+    pub const fn new() -> Self {
+        unsafe { Request::new_raw([0x10f2ee1d87d195e4, 0xf747a2b78f6ddb31], 0, ()) }
+    }
+}
