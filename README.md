@@ -30,6 +30,8 @@ Requests:
  - Executable Address
  - Device Tree Blob
  - Bootloader Performance
+ - Timestamp counter frequency
+ - Flanterm FB init params
 
 # License
 This crate is available as either [MIT](LICENSE-MIT) or [Apache 2.0](LICENSE-APACHE)
