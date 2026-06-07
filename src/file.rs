@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 use core::ffi::{CStr, c_char};
+#[cfg(feature = "ipaddr")]
+use core::net::Ipv4Addr;
 
 use crate::uuid::Uuid;
 
@@ -18,6 +20,7 @@ pub struct File {
     cmdline: *const c_char,
     pub media_type: u32,
     pub tftp_ip: u32,
+    pub tftp_port: u32,
     pub partition_index: u32,
     pub mbr_disk_id: u32,
     pub gpt_disk_uuid: Uuid,
@@ -42,5 +45,14 @@ impl File {
 
     pub fn cmdline(&self) -> &str {
         unsafe { CStr::from_ptr(self.cmdline).to_str().unwrap() }
+    }
+
+    #[cfg(feature = "ipaddr")]
+    pub fn tftp_ipv4(&self) -> Option<Ipv4Addr> {
+        if self.tftp_ip == 0 {
+            return None;
+        }
+        let bytes = self.tftp_ip.to_le_bytes();
+        Some(Ipv4Addr::new(bytes[3], bytes[2], bytes[1], bytes[0]))
     }
 }
