@@ -12,6 +12,7 @@ use request::BootloaderInfoRequest;
 pub mod entrypoint;
 pub mod file;
 pub mod firmware;
+pub mod flanterm;
 pub mod framebuffer;
 pub mod memmap;
 pub mod module;

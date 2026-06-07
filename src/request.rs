@@ -12,6 +12,7 @@ use crate::{
     COMMON_MAGIC,
     entrypoint::EntryPoint,
     file::File,
+    flanterm::FlantermParams,
     framebuffer::{Framebuffer, FramebufferRev1},
     memmap,
     module::InternalModule,
@@ -233,6 +234,30 @@ impl Response<FramebufferRespData> {
 impl FramebufferRequest {
     pub const fn new() -> Self {
         unsafe { Request::new_raw([0x9d5827dcd881dd75, 0xa3148604f6fab11b], 0, ()) }
+    }
+}
+
+#[repr(C)]
+pub struct FlantermParamsRespData {
+    entry_count: u64,
+    entries: *const *const FlantermParams,
+}
+
+/// Flanterm FB init params request.
+pub type FlantermParamsRequest = Request<FlantermParamsRespData>;
+
+/// Flanterm FB init params response.
+pub type FlantermParamsResponse = Response<FlantermParamsRespData>;
+
+impl FlantermParamsRequest {
+    pub const fn new() -> Self {
+        unsafe { Self::new_raw([0x3259399fe7c5f126, 0xe01c1c8c5db9d1a9], 0, ()) }
+    }
+}
+
+impl FlantermParamsRespData {
+    pub fn entries(&self) -> &[&FlantermParams] {
+        unsafe { &*core::ptr::slice_from_raw_parts(self.entries as _, self.entry_count as usize) }
     }
 }
 
