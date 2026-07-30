@@ -209,7 +209,7 @@ impl Response<FramebufferRespData> {
     /// You can also try [`Self::framebuffers_rev1`] to get framebuffers with multiple modes.
     pub fn framebuffers(&self) -> &[&Framebuffer] {
         unsafe {
-            &*core::ptr::slice_from_raw_parts(
+            core::slice::from_raw_parts(
                 self.framebuffers as _,
                 self.framebuffer_count as usize,
             )
@@ -223,7 +223,7 @@ impl Response<FramebufferRespData> {
             return None;
         }
         Some(unsafe {
-            &*core::ptr::slice_from_raw_parts(
+            core::slice::from_raw_parts(
                 self.framebuffers as _,
                 self.framebuffer_count as usize,
             )
@@ -257,7 +257,7 @@ impl FlantermParamsRequest {
 
 impl FlantermParamsRespData {
     pub fn entries(&self) -> &[&FlantermParams] {
-        unsafe { &*core::ptr::slice_from_raw_parts(self.entries as _, self.entry_count as usize) }
+        unsafe { core::slice::from_raw_parts(self.entries as _, self.entry_count as usize) }
     }
 }
 
@@ -344,7 +344,7 @@ pub struct MemmapRespData {
 
 impl MemmapRespData {
     pub fn entries(&self) -> &[&memmap::Entry] {
-        unsafe { &*core::ptr::slice_from_raw_parts(self.entries as _, self.entry_count as usize) }
+        unsafe { core::slice::from_raw_parts(self.entries as _, self.entry_count as usize) }
     }
 }
 
@@ -412,7 +412,7 @@ pub struct ModulesRespData {
 
 impl ModulesRespData {
     pub fn modules(&self) -> &[&File] {
-        unsafe { &*core::ptr::slice_from_raw_parts(self.modules as _, self.module_count as usize) }
+        unsafe { core::slice::from_raw_parts(self.modules as _, self.module_count as usize) }
     }
 }
 
@@ -529,7 +529,7 @@ pub struct EfiMemmapRespData {
 impl EfiMemmapRespData {
     pub fn memmap(&self) -> &[u8] {
         unsafe {
-            &*core::ptr::slice_from_raw_parts(self.memmap as *const u8, self.memmap_size as usize)
+            core::slice::from_raw_parts(self.memmap as *const u8, self.memmap_size as usize)
         }
     }
 }

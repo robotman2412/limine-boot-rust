@@ -41,11 +41,11 @@ impl FlantermParams {
         if self.canvas.is_null() {
             return None;
         }
-        Some(unsafe { &*core::ptr::slice_from_raw_parts(self.canvas, self.canvas_size as usize) })
+        Some(unsafe { core::slice::from_raw_parts(self.canvas, self.canvas_size as usize) })
     }
 
     pub const fn canvas_mut(&mut self) -> &mut [u8] {
-        unsafe { &mut *core::ptr::slice_from_raw_parts_mut(self.canvas, self.canvas_size as usize) }
+        unsafe { core::slice::from_raw_parts_mut(self.canvas, self.canvas_size as usize) }
     }
 
     const fn font_size(&self) -> usize {
@@ -58,7 +58,7 @@ impl FlantermParams {
         }
         Some(unsafe {
             Font {
-                font: &*core::ptr::slice_from_raw_parts(self.font as *const u8, self.font_size()),
+                font: core::slice::from_raw_parts(self.font as *const u8, self.font_size()),
                 width: self.font_width,
                 height: self.font_height,
                 spacing: self.font_spacing,

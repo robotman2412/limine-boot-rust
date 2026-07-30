@@ -51,15 +51,15 @@ impl Framebuffer {
     }
 
     pub fn edid(&self) -> &[u8] {
-        unsafe { &*core::ptr::from_raw_parts(self.edid as _, self.edid_size as usize) }
+        unsafe { core::slice::from_raw_parts(self.edid as _, self.edid_size as usize) }
     }
 
     pub fn as_slice(&self) -> &[u8] {
-        unsafe { &*core::ptr::from_raw_parts(self.address as *const u8, self.size()) }
+        unsafe { core::slice::from_raw_parts(self.address as *const u8, self.size()) }
     }
 
     pub unsafe fn as_slice_mut(&self) -> &mut [u8] {
-        unsafe { &mut *core::ptr::from_raw_parts_mut(self.address as *mut u8, self.size()) }
+        unsafe { core::slice::from_raw_parts_mut(self.address as *mut u8, self.size()) }
     }
 }
 
@@ -73,7 +73,7 @@ pub struct FramebufferRev1 {
 
 impl FramebufferRev1 {
     pub fn modes(&self) -> &[&VideoMode] {
-        unsafe { &*core::ptr::slice_from_raw_parts(self.modes, self.mode_count as usize) }
+        unsafe { core::slice::from_raw_parts(self.modes, self.mode_count as usize) }
     }
 }
 

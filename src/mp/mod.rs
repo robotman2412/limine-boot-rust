@@ -42,6 +42,6 @@ impl MpInfo {
 
 impl MpRespData {
     pub const fn cpus(&self) -> &[&MpInfo] {
-        unsafe { &*core::ptr::slice_from_raw_parts(self.cpus as _, self.cpu_count as usize) }
+        unsafe { core::slice::from_raw_parts(self.cpus as _, self.cpu_count as usize) }
     }
 }
