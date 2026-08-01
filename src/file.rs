@@ -30,12 +30,12 @@ pub struct File {
 
 impl File {
     pub fn data(&self) -> &[u8] {
-        unsafe { &*core::ptr::slice_from_raw_parts(self.address as *const u8, self.size as usize) }
+        unsafe { core::slice::from_raw_parts(self.address as *const u8, self.size as usize) }
     }
 
     pub fn data_mut(&mut self) -> &mut [u8] {
         unsafe {
-            &mut *core::ptr::slice_from_raw_parts_mut(self.address as *mut u8, self.size as usize)
+            core::slice::from_raw_parts_mut(self.address as *mut u8, self.size as usize)
         }
     }
 
